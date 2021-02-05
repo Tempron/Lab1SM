@@ -1,4 +1,5 @@
 #include "list.h"
+#include <stdlib.h>
 
 
 int isEmpty(List* list)
@@ -20,32 +21,84 @@ int insert(List* list, Node* node)
 
 Node* search(List* list, int key) 
 {
-  if (/* condition */)
-  
+    if (list == NULL) 
+        return NULL;
+    Node* node = list->head;
+    while (node != NULL && node->key != key)
+    {
+        node = node->next;
+    }
+    return node;
 }
 
 Node* delete_(List* list, Node* node) 
 {
-    if (list == NULL && node == NULL) return NULL;
-    
+    if (list == NULL && node == NULL) 
+        return NULL;
+    if (node->previous != NULL) 
+        node->previous->next = node->next;
+    else list->head = node->next;
+    if (node->next != NULL)
+        node->next->previous = node->previous;
+    return node;
 }
 
-Node* maxmimum(List* list) 
+Node* maximum(List* list) 
 {
-
+    if (list == NULL) 
+        return NULL;
+    Node* node = list->head->next;
+    Node* max = node;
+    while (node != NULL)
+    {
+        if (max->key < node->key)
+            max = node;
+        node = node->next;
+    }
+    return max;
 }
 
 Node* minimum(List* list) 
 {
-
+    if (list == NULL) 
+        return NULL;
+    Node* node = list->head->next;
+    Node* min = node;
+    while (node != NULL)
+    {
+        if (min->key > node->key)
+            min = node;
+        node = node->next;
+    }
+    return min;
 }
 
 Node* successor(List* list, Node* node) 
 {
-
+    if (list == NULL && node == NULL) 
+        return NULL;
+    node = node->next;
+    Node* max = node;
+    while (node != NULL)
+    {
+        if (max->key < node->key)
+            max = node;
+        node = node->next;
+    }
+    return max;
 }
 
 Node* predecessor(List* list, Node* node) 
 {
-
+    if (list == NULL && node == NULL) 
+        return NULL;
+    node = node->previous;
+    Node* min = node;
+    while (node != NULL)
+    {
+        if (min->key > node->key)
+            min = node;
+        node = node->next;
+    }
+    return min; 
 }
