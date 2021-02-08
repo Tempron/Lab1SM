@@ -8,12 +8,16 @@ typedef struct node_
 typedef struct list_
 {
     Node* head;
+    Node* tail;
 }List;
 
+List* createList();
+Node* createNode();
+int printList(List* list);
 int isEmpty(List* list);
 int insert(List* list, Node* node);
 Node* search(List* list, int key);
-Node* delete_(List* list, Node* node);
+Node* delete(List* list, Node* node);
 Node* maximum(List* list);
 Node* minimum(List* list);
 Node* successor(List* list, Node* node);

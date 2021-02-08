@@ -1,6 +1,27 @@
 #include "list.h"
 #include <stdlib.h>
 
+List* createList() {
+    List* list = (List*)malloc(sizeof(List));
+    list->head = NULL;
+    list->tail = NULL;
+    return list;
+}
+
+Node* createNode() {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->key = -1;
+    node->next = NULL;
+    node->previous = NULL;
+    return node;
+}
+
+int printList(List* list) {
+    Node* node = list->head;
+    for (; node; node = node->next)
+        print("%d", node->key);
+    return 1;
+}
 
 int isEmpty(List* list)
 {
@@ -11,8 +32,11 @@ int isEmpty(List* list)
 int insert(List* list, Node* node)
 {
     if (list == NULL && node == NULL) return 0;
-    if (list->head != NULL)
+    if (list->head == NULL)
+        list->tail = node;
+    else
         list->head->previous = node;
+
     node->next = list->head;
     node->previous = NULL;
     list->head = node;
@@ -31,7 +55,7 @@ Node* search(List* list, int key)
     return node;
 }
 
-Node* delete_(List* list, Node* node) 
+Node* delete(List* list, Node* node) 
 {
     if (list == NULL && node == NULL) 
         return NULL;
@@ -40,6 +64,7 @@ Node* delete_(List* list, Node* node)
     else list->head = node->next;
     if (node->next != NULL)
         node->next->previous = node->previous;
+    else list->tail = node->previous;
     return node;
 }
 
@@ -82,10 +107,10 @@ Node* successor(List* list, Node* node)
     while (node != NULL)
     {
         if (max->key < node->key)
-            max = node;
+            return node;
         node = node->next;
     }
-    return max;
+    return NULL;
 }
 
 Node* predecessor(List* list, Node* node) 
@@ -97,8 +122,8 @@ Node* predecessor(List* list, Node* node)
     while (node != NULL)
     {
         if (min->key > node->key)
-            min = node;
-        node = node->next;
+            return node;
+        node = node->previous;
     }
-    return min; 
+    return NULL; 
 }

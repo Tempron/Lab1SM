@@ -2,9 +2,12 @@
 #include "list.h"
 
 int main() {
-    printf("Hello world!");
-    
-    getchar();
+    List* list = createList();
+    insert(list, createNode());
+    insert(list, createNode());
+    insert(list, createNode());
+
+    printList(list);
     return 0;
 }
 
